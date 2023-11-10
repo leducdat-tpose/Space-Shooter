@@ -43,21 +43,27 @@ public class Player : MonoBehaviour
     private UIManager _uiManager;
     [SerializeField]
     private Animator _playerAnimator;
+    [SerializeField]
+    private AudioClip _laserAudio;
+    [SerializeField]
+    private AudioClip _explosionAudio;
+    private AudioSource _playerAudio;
     void Start()
     {
         _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _playerAnimator = gameObject.GetComponent<Animator>();
+        _playerAudio = gameObject.AddComponent<AudioSource>();
+        _explosionAudio = GameObject.Find("AudioManager").transform.Find("Explosion").GetComponent<AudioSource>().clip;
+        _laserAudio = GameObject.Find("AudioManager").transform.Find("LaserShot").GetComponent<AudioSource>().clip;
         _thurster = transform.Find("Thruster").gameObject;
         _isHasShield = false;
         _shield.SetActive(false);
         _scorePoint = 0;
         _thurster.SetActive(true);
         transform.position = new(0, -3, 0);
-        if (_spawnManager == null)
-        {
-            Debug.LogError("spawnManager is NULL\n");
-        }
+        if (_spawnManager == null) Debug.LogError("spawnManager is NULL\n");
+        if (_playerAudio == null) Debug.LogError("playerAudio is NULL\n");
 
     }
 
@@ -66,6 +72,11 @@ public class Player : MonoBehaviour
     {
         Move();
         limitRangeMove();
+        shoot();
+    }
+
+    private void shoot()
+    {
         if (Input.GetKeyDown(KeyCode.Space) && Time.time >= _canShoot)
         {
             _canShoot = Time.time + _fireRate;
@@ -73,10 +84,12 @@ public class Player : MonoBehaviour
             {
                 Instantiate(_tripleShot, transform.position, Quaternion.identity);
             }
-            else {
+            else
+            {
                 Vector3 position = transform.position + new Vector3(0, 0.8f, 0);
                 Instantiate(_laserPrefab, position, Quaternion.identity);
             }
+            triggerObjectAudio(_laserAudio);
         }
     }
 
@@ -133,6 +146,7 @@ public class Player : MonoBehaviour
         {
             _thurster.SetActive(false);
             _playerAnimator.SetTrigger("Death");
+            triggerObjectAudio(_explosionAudio);
             _uiManager.DisplayGameOver();
         }
     }
@@ -179,5 +193,9 @@ public class Player : MonoBehaviour
         _scorePoint += scorePlus;
         _uiManager.UpdateScoreText(_scorePoint);
     }
-
+    public void triggerObjectAudio(AudioClip audio)
+    {
+        _playerAudio.clip = audio;
+        _playerAudio.Play();
+    }
 }

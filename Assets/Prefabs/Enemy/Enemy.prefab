@@ -101,8 +101,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 9
-  _limitedBottom: -9
-  _spawnPosition: 13
   _player: {fileID: 0}
   _enemyAnimation: {fileID: 2282580207186051809}
   _isMove: 1
