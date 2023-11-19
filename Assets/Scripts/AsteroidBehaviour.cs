@@ -19,11 +19,14 @@ public class AsteroidBehaviour : MonoBehaviour, IObstacle
     private bool _isMove = true;
     [SerializeField]
     private bool _isDestroy = true;
+    [SerializeField]
+    private AudioSource _asteroidAudio;
     // Start is called before the first frame update
     void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
         _asteroidAnimator = GetComponent<Animator>();
+        _asteroidAudio = GetComponent<AudioSource>();
         _isMove = true;
         _isDestroy = false;
     }
@@ -52,6 +55,7 @@ public class AsteroidBehaviour : MonoBehaviour, IObstacle
                 _isMove = false;
                 _isDestroy = true;
                 _asteroidAnimator.SetTrigger("Destroy");
+                triggerObjectAudio(AudioManager.Instance.playExplosion());
             }
             else if (other.tag == "Laser") Destroy(other.gameObject);
         }
@@ -68,5 +72,11 @@ public class AsteroidBehaviour : MonoBehaviour, IObstacle
         {
             Destroy(this.gameObject);
         }
+    }
+
+    public void triggerObjectAudio(AudioClip audio)
+    {
+        _asteroidAudio.clip = audio;
+        _asteroidAudio.Play();
     }
 }

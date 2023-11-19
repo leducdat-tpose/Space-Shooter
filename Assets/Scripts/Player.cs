@@ -44,9 +44,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     private Animator _playerAnimator;
     [SerializeField]
-    private AudioClip _laserAudio;
-    [SerializeField]
-    private AudioClip _explosionAudio;
     private AudioSource _playerAudio;
     void Start()
     {
@@ -54,8 +51,6 @@ public class Player : MonoBehaviour
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _playerAnimator = gameObject.GetComponent<Animator>();
         _playerAudio = gameObject.AddComponent<AudioSource>();
-        _explosionAudio = GameObject.Find("AudioManager").transform.Find("Explosion").GetComponent<AudioSource>().clip;
-        _laserAudio = GameObject.Find("AudioManager").transform.Find("LaserShot").GetComponent<AudioSource>().clip;
         _thurster = transform.Find("Thruster").gameObject;
         _isHasShield = false;
         _shield.SetActive(false);
@@ -89,7 +84,7 @@ public class Player : MonoBehaviour
                 Vector3 position = transform.position + new Vector3(0, 0.8f, 0);
                 Instantiate(_laserPrefab, position, Quaternion.identity);
             }
-            triggerObjectAudio(_laserAudio);
+            triggerObjectAudio(AudioManager.Instance.playLaserShot());
         }
     }
 
@@ -146,7 +141,7 @@ public class Player : MonoBehaviour
         {
             _thurster.SetActive(false);
             _playerAnimator.SetTrigger("Death");
-            triggerObjectAudio(_explosionAudio);
+            triggerObjectAudio(AudioManager.Instance.playExplosion());
             _uiManager.DisplayGameOver();
         }
     }

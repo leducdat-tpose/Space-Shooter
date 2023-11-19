@@ -17,12 +17,12 @@ public class Enemy : MonoBehaviour, IObstacle
     private bool _isDeath = false;
     private int _pointEarn = 10;
     private int _damageToPlayer = 1;
+    [SerializeField]
     private AudioSource _enemyAudio;
-    private AudioClip _explosionAudio;
     void Start()
     {
         _enemyAudio = GetComponent<AudioSource>();
-        _explosionAudio = GameObject.Find("AudioManager").transform.Find("Explosion").GetComponent<AudioSource>().clip;
+        _player = GameObject.Find("Player").GetComponent<Player>();
         if(_player == null) Debug.LogError("Cant get component player form enemy!");
         if (_enemyAudio == null) Debug.LogError("Cant get component audio form enemy!");
         _isMove = true;
@@ -43,14 +43,14 @@ public class Enemy : MonoBehaviour, IObstacle
             {
                 _player.increaseScore(_pointEarn);
                 _enemyAnimation.SetTrigger("Death");
-                triggerObjectAudio(_explosionAudio);
+                triggerObjectAudio(AudioManager.Instance.playExplosion());
                 Destroy(other.gameObject);
             }
             else if (other.tag == "Player")
             {
                 _player.Damaged(_damageToPlayer);
                 _enemyAnimation.SetTrigger("Death");
-                triggerObjectAudio(_explosionAudio);
+                triggerObjectAudio(AudioManager.Instance.playExplosion());
             }
         }
     }
@@ -71,6 +71,7 @@ public class Enemy : MonoBehaviour, IObstacle
             Destroy(this.gameObject);
         }
     }
+
     public void triggerObjectAudio(AudioClip audio)
     {
         _enemyAudio.clip = audio;
