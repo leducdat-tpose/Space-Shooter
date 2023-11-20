@@ -84,7 +84,7 @@ public class Player : MonoBehaviour
                 Vector3 position = transform.position + new Vector3(0, 0.8f, 0);
                 Instantiate(_laserPrefab, position, Quaternion.identity);
             }
-            triggerObjectAudio(AudioManager.Instance.playLaserShot());
+            AudioManager.Instance.playLaserShot();
         }
     }
 
@@ -136,12 +136,13 @@ public class Player : MonoBehaviour
             ShieldPower(false);
         } 
         _lives -= damage;
+        if(_lives < 0) _lives = 0;
         _uiManager.UpdateLiveSprite(_lives);
         if(_lives == 0)
         {
             _thurster.SetActive(false);
             _playerAnimator.SetTrigger("Death");
-            triggerObjectAudio(AudioManager.Instance.playExplosion());
+            AudioManager.Instance.playExplosion();
             _uiManager.DisplayGameOver();
         }
     }
@@ -187,10 +188,5 @@ public class Player : MonoBehaviour
     {
         _scorePoint += scorePlus;
         _uiManager.UpdateScoreText(_scorePoint);
-    }
-    public void triggerObjectAudio(AudioClip audio)
-    {
-        _playerAudio.clip = audio;
-        _playerAudio.Play();
     }
 }

@@ -5,18 +5,27 @@ using UnityEngine;
 
 public class AudioManager : ISingletonMonoBehaviour<AudioManager>
 {
-    [Header("AudioClip")]
+    [Header("Main Audio Source")]
+    [SerializeField]
+    private AudioSource _audioSource;
+    [Header("Audio Clip")]
     [SerializeField]
     private AudioClip _explosion;
     [SerializeField]
     private AudioClip _laserShot;
-    
-    public AudioClip playExplosion()
+    [SerializeField]
+    private AudioClip _buff;
+    public void playExplosion()
     {
-        return _explosion;
+        _audioSource.PlayOneShot(_explosion);
     }
-    public AudioClip playLaserShot()
+    public void playLaserShot()
     {
-        return _laserShot;
+        _audioSource.PlayOneShot(_laserShot);
     }
+    public void playBuff()
+    {
+        _audioSource.PlayOneShot(_buff);
+    }
+
 }

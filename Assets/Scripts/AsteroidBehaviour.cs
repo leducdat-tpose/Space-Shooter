@@ -55,7 +55,7 @@ public class AsteroidBehaviour : MonoBehaviour, IObstacle
                 _isMove = false;
                 _isDestroy = true;
                 _asteroidAnimator.SetTrigger("Destroy");
-                triggerObjectAudio(AudioManager.Instance.playExplosion());
+                AudioManager.Instance.playExplosion();
             }
             else if (other.tag == "Laser") Destroy(other.gameObject);
         }

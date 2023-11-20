@@ -26,6 +26,7 @@ public class TriplePower : MonoBehaviour, IBuffItem
             if (player != null)
             {
                 player.receiveTripleBuff();
+                AudioManager.Instance.playBuff();
             }
             Destroy(this.gameObject);
         }

@@ -21,6 +21,7 @@ public class ShieldPower : MonoBehaviour, IBuffItem
             if (player != null)
             {
                 player.ShieldPower(true);
+                AudioManager.Instance.playBuff();
             }
             Destroy(this.gameObject);
         }

@@ -43,14 +43,14 @@ public class Enemy : MonoBehaviour, IObstacle
             {
                 _player.increaseScore(_pointEarn);
                 _enemyAnimation.SetTrigger("Death");
-                triggerObjectAudio(AudioManager.Instance.playExplosion());
+                AudioManager.Instance.playExplosion();
                 Destroy(other.gameObject);
             }
             else if (other.tag == "Player")
             {
                 _player.Damaged(_damageToPlayer);
                 _enemyAnimation.SetTrigger("Death");
-                triggerObjectAudio(AudioManager.Instance.playExplosion());
+                AudioManager.Instance.playExplosion();
             }
         }
     }
@@ -72,9 +72,4 @@ public class Enemy : MonoBehaviour, IObstacle
         }
     }
 
-    public void triggerObjectAudio(AudioClip audio)
-    {
-        _enemyAudio.clip = audio;
-        _enemyAudio.Play();
-    }
 }
