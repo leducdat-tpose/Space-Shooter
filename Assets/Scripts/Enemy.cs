@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour, IObstacle
     private bool _isDeath = false;
     private int _pointEarn = 10;
     private int _damageToPlayer = 1;
+    private float _coolDownShoot = 0f;
     [SerializeField]
     private AudioSource _enemyAudio;
     void Start()
@@ -63,6 +64,10 @@ public class Enemy : MonoBehaviour, IObstacle
     public void Move()
     {
         if(_isMove) transform.Translate(Vector3.down * Time.deltaTime * _speed);
+    }
+    public void Shoot()
+    {
+        
     }
     public void outOfBound()
     {

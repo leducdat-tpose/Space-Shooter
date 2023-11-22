@@ -1109,6 +1109,9 @@ MonoBehaviour:
   _powerUpPrefabs:
   - {fileID: 6611902895732246591, guid: ab794ccb1bcb57940bdace3887236fe1, type: 3}
   - {fileID: 7485262114947049257, guid: 6f30de8df67920f45bdc32dd6cad0a01, type: 3}
+  _laserPrefabs:
+  - {fileID: 8279778548873707898, guid: 59f2fb6a21705e145a05a6b01a557389, type: 3}
+  - {fileID: 4982643740399612364, guid: 7c33b5359b97fc041ab7e28ffbb0edbb, type: 3}
   _posYToSpawn: 13
   _itemsContainer: {fileID: 1605980898}
   _EnemyContainer: {fileID: 1915703452}

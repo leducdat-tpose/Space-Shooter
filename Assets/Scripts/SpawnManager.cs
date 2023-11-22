@@ -2,12 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SpawnManager : MonoBehaviour
+public enum TypeLaser 
+{
+    SingleLaser,
+    TripleLaser,
+}
+
+
+public class SpawnManager : ISingletonMonoBehaviour<SpawnManager>
 {
     [SerializeField]
     private List<GameObject> _obstaclePrefab;
     [SerializeField]
     private List<GameObject> _powerUpPrefabs;
+    [SerializeField]
+    private List<GameObject> _laserPrefabs;
     [SerializeField]
     private float _posYToSpawn = 13.0f;
     [SerializeField]
@@ -46,6 +55,11 @@ public class SpawnManager : MonoBehaviour
             newPowerUp.transform.parent = _itemsContainer.transform;
             yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
         }
+    }
+
+    public void SpawnLaser(Vector3 position, TypeLaser typeLaser)
+    {
+        Instantiate(_laserPrefabs[(int)typeLaser], position, Quaternion.identity);
     }
 
     public void playerDead()

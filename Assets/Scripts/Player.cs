@@ -32,7 +32,6 @@ public class Player : MonoBehaviour
     private GameObject _tripleShot;
     [SerializeField]
     private GameObject _thurster;
-    private SpawnManager _spawnManager;
     [SerializeField]
     private GameObject _shield;
     [SerializeField]
@@ -47,7 +46,6 @@ public class Player : MonoBehaviour
     private AudioSource _playerAudio;
     void Start()
     {
-        _spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _playerAnimator = gameObject.GetComponent<Animator>();
         _playerAudio = gameObject.AddComponent<AudioSource>();
@@ -57,7 +55,6 @@ public class Player : MonoBehaviour
         _scorePoint = 0;
         _thurster.SetActive(true);
         transform.position = new(0, -3, 0);
-        if (_spawnManager == null) Debug.LogError("spawnManager is NULL\n");
         if (_playerAudio == null) Debug.LogError("playerAudio is NULL\n");
 
     }
@@ -75,14 +72,14 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && Time.time >= _canShoot)
         {
             _canShoot = Time.time + _fireRate;
+            Vector3 position = transform.position + new Vector3(0, 0.8f, 0);
             if (_triplePower == true)
             {
-                Instantiate(_tripleShot, transform.position, Quaternion.identity);
+                SpawnManager.Instance.SpawnLaser(position, TypeLaser.TripleLaser);
             }
             else
             {
-                Vector3 position = transform.position + new Vector3(0, 0.8f, 0);
-                Instantiate(_laserPrefab, position, Quaternion.identity);
+                SpawnManager.Instance.SpawnLaser(position, TypeLaser.SingleLaser);
             }
             AudioManager.Instance.playLaserShot();
         }
@@ -125,7 +122,7 @@ public class Player : MonoBehaviour
         if (_lives < 1) 
         {
             Destroy(this.gameObject);
-            _spawnManager.playerDead();
+            SpawnManager.Instance.playerDead();
         }
     }
     public void Damaged(int damage)
