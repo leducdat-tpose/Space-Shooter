@@ -23,7 +23,7 @@ public class GameControl : MonoBehaviour
     {
         if(_canRestart && Input.GetKeyDown(KeyCode.R))
         {
-            SceneManager.LoadScene(1);
+            SceneManager.LoadScene("Game");
         }
     }
 
