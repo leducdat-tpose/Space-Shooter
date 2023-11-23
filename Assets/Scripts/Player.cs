@@ -10,10 +10,6 @@ public class Player : MonoBehaviour
     [SerializeField]
     private float _speed = 9.0f;
     [SerializeField]
-    private GameObject _laserPrefab;
-    [SerializeField]
-    private GameObject _laserContainer;
-    [SerializeField]
     private float _fireRate = 1.0f;
     private float _canShoot = 0;
     [SerializeField]
@@ -91,6 +87,28 @@ public class Player : MonoBehaviour
         {
             float verticalInput = Input.GetAxis("Vertical");
             float horizontalInput = Input.GetAxis("Horizontal");
+            if (Input.GetKey(KeyCode.A))
+            {
+
+                _playerAnimator.SetBool("TurnLeft", true);
+                _playerAnimator.SetBool("TurnRight", false);
+            }
+            else if (Input.GetKey(KeyCode.D))
+            {
+
+                _playerAnimator.SetBool("TurnLeft", false);
+                _playerAnimator.SetBool("TurnRight", true);
+            }
+            else if (Input.GetKey(KeyCode.A) && Input.GetKey(KeyCode.D))
+            {
+                _playerAnimator.SetBool("TurnLeft", false);
+                _playerAnimator.SetBool("TurnRight", false);
+            }
+            else 
+            {
+                _playerAnimator.SetBool("TurnLeft", false);
+                _playerAnimator.SetBool("TurnRight", false);
+            }
             Vector3 control = new Vector3(horizontalInput, verticalInput, 0);
             transform.Translate(control * _speed * Time.deltaTime);
         }

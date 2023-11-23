@@ -8,6 +8,12 @@ public enum TypeLaser
     TripleLaser,
 }
 
+public enum TypeObject
+{
+    Player,
+    Enemy,
+}
+
 
 public class SpawnManager : ISingletonMonoBehaviour<SpawnManager>
 {
@@ -23,6 +29,8 @@ public class SpawnManager : ISingletonMonoBehaviour<SpawnManager>
     private GameObject _itemsContainer;
     [SerializeField]
     private GameObject _EnemyContainer;
+    [SerializeField]
+    private GameObject _fromPlayer;
     private bool _stopSpawning = false;
     void Start()
     {
@@ -57,9 +65,11 @@ public class SpawnManager : ISingletonMonoBehaviour<SpawnManager>
         }
     }
 
-    public void SpawnLaser(Vector3 position, TypeLaser typeLaser)
+    public void SpawnLaser(Vector3 position, TypeLaser typeLaser, TypeObject typeObject = TypeObject.Player)
     {
-        Instantiate(_laserPrefabs[(int)typeLaser], position, Quaternion.identity);
+        GameObject newLaser = Instantiate(_laserPrefabs[(int)typeLaser], position, Quaternion.identity);
+        if (typeObject == TypeObject.Player) newLaser.transform.parent = _fromPlayer.transform;
+        else if(typeObject == TypeObject.Enemy) newLaser.transform.parent = _EnemyContainer.transform;
     }
 
     public void playerDead()

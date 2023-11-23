@@ -17,7 +17,8 @@ public class Enemy : MonoBehaviour, IObstacle
     private bool _isDeath = false;
     private int _pointEarn = 10;
     private int _damageToPlayer = 1;
-    private float _coolDownShoot = 0f;
+    private float _fireRate = 2.5f;
+    private float _canShoot = 0;
     [SerializeField]
     private AudioSource _enemyAudio;
     void Start()
@@ -34,6 +35,8 @@ public class Enemy : MonoBehaviour, IObstacle
     void Update()
     {
         Move();
+        Shoot();
+        outOfBound();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -67,7 +70,13 @@ public class Enemy : MonoBehaviour, IObstacle
     }
     public void Shoot()
     {
-        
+        if(Time.time >= _canShoot)
+        {
+            _canShoot = Time.time + _fireRate;
+            Vector3 position = transform.position + new Vector3(0, -5.1f, 0);
+            SpawnManager.Instance.SpawnLaser(position, TypeLaser.SingleLaser, TypeObject.Enemy);
+            AudioManager.Instance.playLaserShot();
+        }
     }
     public void outOfBound()
     {

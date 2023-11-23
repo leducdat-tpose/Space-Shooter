@@ -101,13 +101,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da44f2afb701ddb43bd491cb70e21c4e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _explosion: {fileID: 0}
-  _laserShot: {fileID: 0}
   _speed: 9
   _player: {fileID: 0}
   _enemyAnimation: {fileID: 2282580207186051809}
   _isMove: 1
   _isDeath: 0
+  _enemyAudio: {fileID: 0}
 --- !u!50 &8898219961110152350
 Rigidbody2D:
   serializedVersion: 4
