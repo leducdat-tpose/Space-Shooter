@@ -16,8 +16,19 @@ public class MenuManager : MonoBehaviour
         
     }
 
-    public void Play()
+    public void PlayGame()
     {
-        SceneManager.LoadScene(1);
+        SceneManager.LoadScene("Game");
     }
+
+    public void SettingMenu()
+    {
+        SceneManager.LoadScene("SettingMenu");
+    }
+
+    public void QuitGame()
+    {
+        Application.Quit();
+    }
+
 }

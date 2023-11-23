@@ -17,6 +17,7 @@ public class GameControl : MonoBehaviour
     void Update()
     {
         RestartGame();
+        QuitGame();
     }
     private void RestartGame()
     {
@@ -29,6 +30,14 @@ public class GameControl : MonoBehaviour
     public void Restart()
     {
         _canRestart = true;
+    }
+
+    public void QuitGame()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
 }
