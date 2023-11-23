@@ -448,8 +448,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _speed: 9
-  _laserPrefab: {fileID: 8279778548873707898, guid: 59f2fb6a21705e145a05a6b01a557389, type: 3}
-  _laserContainer: {fileID: 0}
   _fireRate: 1
   _limitedTop: 5
   _limitedBottom: -3
@@ -1084,7 +1082,7 @@ MonoBehaviour:
   _posYToSpawn: 13
   _itemsContainer: {fileID: 1605980898}
   _EnemyContainer: {fileID: 1915703452}
-  _fromPlayer: {fileID: 0}
+  _fromPlayer: {fileID: 1035674230}
 --- !u!4 &1029463428
 Transform:
   m_ObjectHideFlags: 0
