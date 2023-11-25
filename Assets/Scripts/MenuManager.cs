@@ -4,12 +4,12 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour
 {
-    // Start is called before the first frame update
+    [SerializeField]
+    protected GameControl gameControl;
     void Start()
     {
-        
+        if (gameControl == null) Debug.Log("Not found gameControl!");
     }
-
     // Update is called once per frame
     void Update()
     {
@@ -26,9 +26,19 @@ public class MenuManager : MonoBehaviour
         SceneManager.LoadScene("SettingMenu");
     }
 
+    public void ResumeGame()
+    {
+        gameControl.pauseMenu.SetActive(false);
+        Time.timeScale = 1.0f;
+    }
+
     public void QuitGame()
     {
-        Application.Quit();
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #else
+		    Application.Quit();
+        #endif
     }
 
 }

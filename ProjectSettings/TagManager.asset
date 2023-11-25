@@ -52,3 +52,6 @@ TagManager:
   - name: ForgeGround
     uniqueID: 2702890399
     locked: 0
+  - name: Canvas
+    uniqueID: 417550257
+    locked: 0

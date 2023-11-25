@@ -12,4 +12,9 @@ public class ApplicationManager : MonoBehaviour {
 		Application.Quit();
 		#endif
 	}
+
+    public void OnApplicationPause(bool pause)
+    {
+        
+    }
 }

@@ -7,17 +7,20 @@ public class GameControl : MonoBehaviour
 {
     [SerializeField]
     private bool _canRestart;
+    [SerializeField]
+    public GameObject pauseMenu;
     // Start is called before the first frame update
     void Start()
     {
         _canRestart = false;
+        pauseMenu.SetActive(false);
     }
 
     // Update is called once per frame
     void Update()
     {
         RestartGame();
-        QuitGame();
+        PauseGame();
     }
     private void RestartGame()
     {
@@ -31,13 +34,13 @@ public class GameControl : MonoBehaviour
     {
         _canRestart = true;
     }
-
-    public void QuitGame()
+    public void PauseGame()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && pauseMenu.activeSelf == false)
         {
-            Application.Quit();
+            pauseMenu.SetActive(true);
+            Time.timeScale = 0f;
         }
-    }
 
+    }
 }

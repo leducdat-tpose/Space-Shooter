@@ -58,9 +58,13 @@ public class Player : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        Move();
+        if(Time.timeScale != 0)
+        {
+            Move();
+            shoot();
+        }
         limitRangeMove();
-        shoot();
+
     }
 
     private void shoot()
