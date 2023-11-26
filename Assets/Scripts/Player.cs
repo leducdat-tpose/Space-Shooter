@@ -67,6 +67,16 @@ public class Player : MonoBehaviour
 
     }
 
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.GetComponent<Laser>().IsFromEnemy() == true)
+        {
+            this.Damaged(other.GetComponent<Laser>().GetDamage());
+            Destroy(other.gameObject);
+        }
+    }
+
     private void shoot()
     {
         if (Input.GetKeyDown(KeyCode.Space) && Time.time >= _canShoot)

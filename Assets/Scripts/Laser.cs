@@ -7,6 +7,8 @@ public class Laser : MonoBehaviour
 {
     [SerializeField]
     private float _speed = 13.0f;
+    [SerializeField]
+    private int _damaged = 1;
     private bool _isEnemy = false;
     void Start()
     {
@@ -26,6 +28,11 @@ public class Laser : MonoBehaviour
         if(_isEnemy != true) transform.Translate(_speed * Vector3.up * Time.deltaTime);
         else if(_isEnemy) transform.Translate(_speed * Vector3.down * Time.deltaTime);
     }
+
+
+    public int GetDamage() { return _damaged; }
+
+    public bool IsFromEnemy() { return _isEnemy; }
     void outOfBound()
     {
         if (transform.position.y > 13.0f || transform.position.y <= -5.0f)
