@@ -14,7 +14,7 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private Image _currentLiveSprite;
     [SerializeField]
-    private TextMeshProUGUI _scroceText;
+    private TextMeshProUGUI _scroceText, _bestScroseText;
     [SerializeField]
     private TextMeshProUGUI _gameOverText;
     [SerializeField]
@@ -29,19 +29,22 @@ public class UIManager : MonoBehaviour
         _gameOverText = transform.Find("GameOverText").GetComponent<TextMeshProUGUI>();
         _restartGameText = transform.Find("RestartText").GetComponent <TextMeshProUGUI>();
         _scroceText = transform.Find("ScorePoint").GetComponent<TextMeshProUGUI>();
+        _bestScroseText = transform.Find("BestScorePoint").GetComponent<TextMeshProUGUI>();
 
 
-
+        if (_bestScroseText == null) Debug.LogError("Cant find _bestScroseText");
+        if (_scroceText == null) Debug.LogError("Cant find _scroceText");
         if (_gameOverText == null) Debug.LogError("Cant find _gameOverText");
         if (_restartGameText == null) Debug.LogError("Cant find _restartGameText");
         if (_player == null) Debug.LogError("Cant find player, UIManager!");
         if(_player != null)
         {
             UpdateLiveSprite(_player.GetLives());
+            UpdateScoreText(_player.GetScorePoint());
+            UpdateBestScore(PlayerPrefs.GetInt("BestScore", 0));
         }
         _gameOverText.enabled = false;
         _restartGameText.enabled = false;
-        UpdateScoreText(_player.GetScorePoint());
     }
 
     public void UpdateLiveSprite(int index)
@@ -59,6 +62,11 @@ public class UIManager : MonoBehaviour
     public void UpdateScoreText(int index)
     {
         _scroceText.text = "Score: " + index;
+    }
+
+    public void UpdateBestScore(int index)
+    {
+        _bestScroseText.text = "Best: " + index;
     }
 
     IEnumerator loopGameOverText()

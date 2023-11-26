@@ -162,6 +162,11 @@ public class Player : MonoBehaviour
             _thurster.SetActive(false);
             _playerAnimator.SetTrigger("Death");
             AudioManager.Instance.playExplosion();
+            if(PlayerPrefs.GetInt("BestScore", 0) < this.GetScorePoint())
+            {
+                PlayerPrefs.SetInt("BestScore", this.GetScorePoint());
+                _uiManager.UpdateBestScore(PlayerPrefs.GetInt("BestScore"));
+            }
             _uiManager.DisplayGameOver();
         }
     }
