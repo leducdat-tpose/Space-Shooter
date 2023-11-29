@@ -5,11 +5,16 @@ using UnityEngine;
 interface IObstacle
 {
     void Move();
-    void Destroy();
+    void DeSpawn();
     void outOfBound();
 }
 interface IBuffItem
 {
     void MoveDown();
     void outOfBound();
+}
+
+interface IObjectPool
+{
+
 }

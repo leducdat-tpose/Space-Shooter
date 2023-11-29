@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TypeLaser 
+public enum TypeLaser
 {
     SingleLaser,
     TripleLaser,
@@ -26,31 +26,53 @@ public class SpawnManager : ISingletonMonoBehaviour<SpawnManager>
     [SerializeField]
     private float _posYToSpawn = 13.0f;
     [SerializeField]
+    private ObjectPool _objectPool;
+    [SerializeField]
     private GameObject _itemsContainer;
     [SerializeField]
     private GameObject _EnemyContainer;
     [SerializeField]
     private GameObject _fromPlayer;
     private bool _stopSpawning = false;
+
     void Start()
     {
+        _objectPool = ObjectPool.Instance;
         StartCoroutine("SpawnDelayEnemy");
         StartCoroutine("SpawnDelayPowerUp");
+        StartCoroutine("SpawnDelayAsteroid");
     }
     // Update is called once per frame
     void Update()
     {
-        
     }
+
+
+    public void SpawnLaser(Vector2 position, Quaternion rotation)
+    {
+        _objectPool.SpawnObject("Laser", position, rotation);
+    }
+
+
+
 
     IEnumerator SpawnDelayEnemy()
     {
         while (_stopSpawning == false)
         {
-            Vector3 posToSpawn = new(Random.Range(-12.0f, 12.0f), _posYToSpawn, 0);
-            GameObject newEnemy = Instantiate(_obstaclePrefab[Random.Range(0, _obstaclePrefab.Count)], posToSpawn, Quaternion.identity);
-            newEnemy.transform.parent = _EnemyContainer.transform;
-            yield return new WaitForSeconds(2);
+
+            yield return new WaitForSeconds(Random.Range(0.5f, 1.5f));
+            Vector2 posToSpawn = new(Random.Range(-12.0f, 12.0f), _posYToSpawn);
+            _objectPool.SpawnObject("Enemy", posToSpawn, Quaternion.identity);
+        }
+    }
+    IEnumerator SpawnDelayAsteroid()
+    {
+        while (_stopSpawning == false)
+        {
+            yield return new WaitForSeconds(Random.Range(10f, 17f));
+            Vector2 posToSpawn = new(Random.Range(-12.0f, 12.0f), _posYToSpawn);
+            _objectPool.SpawnObject("Asteroid", posToSpawn, Quaternion.identity);
         }
     }
 
@@ -63,13 +85,6 @@ public class SpawnManager : ISingletonMonoBehaviour<SpawnManager>
             newPowerUp.transform.parent = _itemsContainer.transform;
             yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
         }
-    }
-
-    public void SpawnLaser(Vector3 position, TypeLaser typeLaser, TypeObject typeObject = TypeObject.Player)
-    {
-        GameObject newLaser = Instantiate(_laserPrefabs[(int)typeLaser], position, Quaternion.identity);
-        if (typeObject == TypeObject.Player) newLaser.transform.parent = _fromPlayer.transform;
-        else if(typeObject == TypeObject.Enemy) newLaser.transform.parent = _EnemyContainer.transform;
     }
 
     public void playerDead()

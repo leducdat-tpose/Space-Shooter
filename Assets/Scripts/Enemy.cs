@@ -27,9 +27,14 @@ public class Enemy : MonoBehaviour, IObstacle
         _player = GameObject.Find("Player").GetComponent<Player>();
         if(_player == null) Debug.LogError("Cant get component player form enemy!");
         if (_enemyAudio == null) Debug.LogError("Cant get component audio form enemy!");
+    }
+
+    private void OnEnable()
+    {
         _isMove = true;
         _isDeath = false;
     }
+
 
     // Update is called once per frame
     void Update()
@@ -46,22 +51,25 @@ public class Enemy : MonoBehaviour, IObstacle
             if (other.tag == "Laser")
             {
                 _player.increaseScore(_pointEarn);
+                _isMove = false;
+                _isDeath = true;
                 _enemyAnimation.SetTrigger("Death");
                 AudioManager.Instance.playExplosion();
-                Destroy(other.gameObject);
             }
             else if (other.tag == "Player")
             {
                 _player.Damaged(_damageToPlayer);
+                _isMove = false;
+                _isDeath = true;
                 _enemyAnimation.SetTrigger("Death");
                 AudioManager.Instance.playExplosion();
             }
         }
     }
 
-    public void Destroy()
+    public void DeSpawn()
     {
-        Destroy(this.gameObject);
+        ObjectPool.Instance.DeSpawnObject("Enemy", this.gameObject);
     }
 
     public void Move()
@@ -70,11 +78,12 @@ public class Enemy : MonoBehaviour, IObstacle
     }
     public void Shoot()
     {
-        if(Time.time >= _canShoot)
+        if(Time.time >= _canShoot && _isMove == true && _isDeath == false)
         {
             _canShoot = Time.time + _fireRate;
             Vector3 position = transform.position + new Vector3(0, -5.1f, 0);
-            SpawnManager.Instance.SpawnLaser(position, TypeLaser.SingleLaser, TypeObject.Enemy);
+            Quaternion rotation = Quaternion.Euler(0, 0, 180);
+            SpawnManager.Instance.SpawnLaser(position, rotation);
             AudioManager.Instance.playLaserShot();
         }
     }
@@ -82,7 +91,7 @@ public class Enemy : MonoBehaviour, IObstacle
     {
         if (transform.position.y <= -5.0f)
         {
-            Destroy(this.gameObject);
+           this.DeSpawn();
         }
     }
 

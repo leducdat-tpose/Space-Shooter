@@ -9,10 +9,8 @@ public class Laser : MonoBehaviour
     private float _speed = 13.0f;
     [SerializeField]
     private int _damaged = 1;
-    private bool _isEnemy = false;
     void Start()
     {
-        if(transform.parent.name == "EnemyContainer") _isEnemy = true;
     }
 
     // Update is called once per frame
@@ -25,21 +23,31 @@ public class Laser : MonoBehaviour
 
     void Move()
     {
-        if(_isEnemy != true) transform.Translate(_speed * Vector3.up * Time.deltaTime);
-        else if(_isEnemy) transform.Translate(_speed * Vector3.down * Time.deltaTime);
+        transform.Translate(_speed * Vector3.up * Time.deltaTime);
     }
 
 
     public int GetDamage() { return _damaged; }
 
-    public bool IsFromEnemy() { return _isEnemy; }
+    void DeSpawn()
+    {
+        ObjectPool.Instance.DeSpawnObject("Laser", this.gameObject);
+    }
+
     void outOfBound()
     {
         if (transform.position.y > 13.0f || transform.position.y <= -5.0f)
         {
-            Destroy(this.gameObject);
+            DeSpawn();
         }
     }
 
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.tag == "Enemy" || other.tag == "Player")
+        {
+            DeSpawn();
+        }
+    }
 
 }

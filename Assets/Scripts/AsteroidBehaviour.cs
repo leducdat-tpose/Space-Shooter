@@ -55,20 +55,19 @@ public class AsteroidBehaviour : MonoBehaviour, IObstacle
                 _asteroidAnimator.SetTrigger("Destroy");
                 AudioManager.Instance.playExplosion();
             }
-            else if (other.tag == "Laser") Destroy(other.gameObject);
         }
 
     }
 
-    public void Destroy()
+    public void DeSpawn()
     {
-        Destroy(this.gameObject);
+        ObjectPool.Instance.DeSpawnObject("Asteroid", this.gameObject);
     }
     public void outOfBound()
     {
         if (transform.position.y <= -5.0f)
         {
-            Destroy(this.gameObject);
+            this.DeSpawn();
         }
     }
 

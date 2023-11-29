@@ -70,11 +70,11 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.GetComponent<Laser>().IsFromEnemy() == true)
+        if (other.tag == "Laser")
         {
             this.Damaged(other.GetComponent<Laser>().GetDamage());
-            Destroy(other.gameObject);
         }
+        else return;
     }
 
     private void shoot()
@@ -82,14 +82,14 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space) && Time.time >= _canShoot)
         {
             _canShoot = Time.time + _fireRate;
-            Vector3 position = transform.position + new Vector3(0, 0.8f, 0);
+            Vector3 position = transform.position + new Vector3(0, 2, 0);
             if (_triplePower == true)
             {
-                SpawnManager.Instance.SpawnLaser(position, TypeLaser.TripleLaser);
+                SpawnManager.Instance.SpawnLaser(position, Quaternion.identity);
             }
             else
             {
-                SpawnManager.Instance.SpawnLaser(position, TypeLaser.SingleLaser);
+                SpawnManager.Instance.SpawnLaser(position, Quaternion.identity);
             }
             AudioManager.Instance.playLaserShot();
         }
