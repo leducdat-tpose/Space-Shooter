@@ -11,6 +11,7 @@ interface IObstacle
 interface IBuffItem
 {
     void MoveDown();
+    void DeSpawn();
     void outOfBound();
 }
 

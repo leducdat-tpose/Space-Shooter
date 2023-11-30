@@ -2,17 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum TypeLaser
-{
-    SingleLaser,
-    TripleLaser,
-}
-
-public enum TypeObject
-{
-    Player,
-    Enemy,
-}
 
 
 public class SpawnManager : ISingletonMonoBehaviour<SpawnManager>
@@ -33,6 +22,7 @@ public class SpawnManager : ISingletonMonoBehaviour<SpawnManager>
     private GameObject _EnemyContainer;
     [SerializeField]
     private GameObject _fromPlayer;
+    private string[] _namePower = { "ShieldPower", "TriplePower" };
     private bool _stopSpawning = false;
 
     void Start()
@@ -80,10 +70,10 @@ public class SpawnManager : ISingletonMonoBehaviour<SpawnManager>
     {
         while (_stopSpawning == false)
         {
-            Vector3 posToSpawn = new(Random.Range(-12.0f, 12.0f), _posYToSpawn, 0);
-            GameObject newPowerUp = Instantiate(_powerUpPrefabs[Random.Range(0, _powerUpPrefabs.Count)], posToSpawn, Quaternion.identity);
-            newPowerUp.transform.parent = _itemsContainer.transform;
-            yield return new WaitForSeconds(Random.Range(3.0f, 7.0f));
+            yield return new WaitForSeconds(Random.Range(5.0f, 8.0f));
+            Vector2 posToSpawn = new(Random.Range(-12.0f, 12.0f), _posYToSpawn);
+            string _tag = _namePower[Random.Range(0, _namePower.Length)];
+            _objectPool.SpawnObject(_tag, posToSpawn, Quaternion.identity);
         }
     }
 
