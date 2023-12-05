@@ -19,14 +19,10 @@ public class Enemy : MonoBehaviour, IObstacle
     private int _damageToPlayer = 1;
     private float _fireRate = 2.5f;
     private float _canShoot = 0;
-    [SerializeField]
-    private AudioSource _enemyAudio;
     void Start()
     {
-        _enemyAudio = GetComponent<AudioSource>();
-        _player = GameObject.Find("Player").GetComponent<Player>();
+        _player = Player.Instance;
         if(_player == null) Debug.LogError("Cant get component player form enemy!");
-        if (_enemyAudio == null) Debug.LogError("Cant get component audio form enemy!");
     }
 
     private void OnEnable()

@@ -9,7 +9,14 @@ public class GameControl : MonoBehaviour
     private bool _canRestart;
     [SerializeField]
     public GameObject pauseMenu;
+    [SerializeField]
+    public GameObject _mainCanvas;
     // Start is called before the first frame update
+    private void Awake()
+    {
+        _mainCanvas = GameObject.Find("Canvas").gameObject;
+        _mainCanvas.SetActive(true);
+    }
     void Start()
     {
         _canRestart = false;

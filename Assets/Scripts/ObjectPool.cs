@@ -24,6 +24,7 @@ public class ObjectPool : ISingletonMonoBehaviour<ObjectPool>
         {
             Queue<GameObject> objectpool = new Queue<GameObject>();
             GameObject container = new GameObject(pool.tag + "Pool");
+            container.transform.parent = this.transform;
             for(int i = 0; i < pool.size; i++)
             {
                 GameObject obj = Instantiate(pool.prefab);

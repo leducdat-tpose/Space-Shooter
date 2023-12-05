@@ -22,8 +22,8 @@ public class AsteroidBehaviour : MonoBehaviour, IObstacle
     // Start is called before the first frame update
     void Start()
     {
-        _player = GameObject.Find("Player").GetComponent<Player>();
-        _asteroidAnimator = GetComponent<Animator>();
+        _player = Player.Instance;
+        _asteroidAnimator = transform.GetComponent<Animator>();
         _isMove = true;
         _isDestroy = false;
     }
@@ -59,6 +59,11 @@ public class AsteroidBehaviour : MonoBehaviour, IObstacle
 
     }
 
+    void OnParticleTrigger()
+    {
+    }
+
+
     public void DeSpawn()
     {
         ObjectPool.Instance.DeSpawnObject("Asteroid", this.gameObject);
@@ -70,5 +75,4 @@ public class AsteroidBehaviour : MonoBehaviour, IObstacle
             this.DeSpawn();
         }
     }
-
 }

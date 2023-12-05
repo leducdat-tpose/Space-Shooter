@@ -38,9 +38,15 @@ public class SpawnManager : ISingletonMonoBehaviour<SpawnManager>
     }
 
 
-    public void SpawnLaser(Vector2 position, Quaternion rotation)
+    public void SpawnLaser(Vector2 position, Quaternion rotation, string type = "")
     {
-        _objectPool.SpawnObject("Laser", position, rotation);
+        if (type == "Triple")
+        {
+            _objectPool.SpawnObject("Laser", position + new Vector2(0, 0.8f), rotation);
+            _objectPool.SpawnObject("Laser", position + new Vector2(-0.96f,0), rotation);
+            _objectPool.SpawnObject("Laser", position + new Vector2(0.96f, 0), rotation);
+        } else
+        _objectPool.SpawnObject("Laser" , position, rotation);
     }
 
 

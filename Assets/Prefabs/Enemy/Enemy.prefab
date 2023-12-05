@@ -106,7 +106,6 @@ MonoBehaviour:
   _enemyAnimation: {fileID: 2282580207186051809}
   _isMove: 1
   _isDeath: 0
-  _enemyAudio: {fileID: 0}
 --- !u!50 &8898219961110152350
 Rigidbody2D:
   serializedVersion: 4

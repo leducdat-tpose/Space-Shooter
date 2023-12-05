@@ -133,9 +133,8 @@ GameObject:
   m_Component:
   - component: {fileID: 81160320}
   - component: {fileID: 81160321}
-  - component: {fileID: 81160322}
   m_Layer: 0
-  m_Name: Shields
+  m_Name: Shield
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -208,26 +207,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!95 &81160322
-Animator:
-  serializedVersion: 5
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 81160319}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: e9a36cfd920fd904f9ef9f7b320f7335, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
 --- !u!1 &128250682
 GameObject:
   m_ObjectHideFlags: 0
@@ -491,22 +470,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3af439609cac05144b5c879b3c5278f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _lives: 3
+  _scorePoint: 0
   _speed: 9
-  _fireRate: 1
+  _fireRate: 0.2
+  _triplePower: 0
   _limitedTop: 5
   _limitedBottom: -3
   _limitedRight: 12
   _limitedLeft: -12
-  _lives: 3
-  _triplePower: 0
-  _tripleShot: {fileID: 4982643740399612364, guid: 7c33b5359b97fc041ab7e28ffbb0edbb, type: 3}
   _thurster: {fileID: 0}
-  _shield: {fileID: 81160319}
+  _shield: {fileID: 0}
   _isHasShield: 0
-  _scorePoint: 0
   _uiManager: {fileID: 0}
-  _playerAnimator: {fileID: 278500044}
-  _playerAudio: {fileID: 0}
+  _playerAnimator: {fileID: 0}
 --- !u!61 &278500043
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -809,6 +786,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _canRestart: 0
   pauseMenu: {fileID: 878077390}
+  _mainCanvas: {fileID: 0}
 --- !u!4 &686625830
 Transform:
   m_ObjectHideFlags: 0
@@ -2030,13 +2008,13 @@ MonoBehaviour:
   pools:
   - tag: Laser
     prefab: {fileID: 8279778548873707898, guid: 59f2fb6a21705e145a05a6b01a557389, type: 3}
-    size: 10
+    size: 50
   - tag: Enemy
     prefab: {fileID: 4863898688921874846, guid: f1751364d6361c443bd495289fa621de, type: 3}
-    size: 15
+    size: 40
   - tag: Asteroid
     prefab: {fileID: 4981011202553982306, guid: 171452c77f4e9814d80cba8215ea17ff, type: 3}
-    size: 8
+    size: 25
   - tag: ShieldPower
     prefab: {fileID: 6611902895732246591, guid: ab794ccb1bcb57940bdace3887236fe1, type: 3}
     size: 5

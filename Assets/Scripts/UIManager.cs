@@ -22,9 +22,16 @@ public class UIManager : MonoBehaviour
     [SerializeField]
     private GameControl _gameControl;
     // Start is called before the first frame update
+
+    private void Awake()
+    {
+        this.gameObject.SetActive(true);
+    }
+
+
     void Start()
     {
-        _player = GameObject.Find("Player").GetComponent<Player>();
+        _player = Player.Instance;
         _gameControl = GameObject.Find("GameControl").GetComponent<GameControl>();
         _gameOverText = transform.Find("GameOverText").GetComponent<TextMeshProUGUI>();
         _restartGameText = transform.Find("RestartText").GetComponent <TextMeshProUGUI>();

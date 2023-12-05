@@ -5,13 +5,22 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UIElements;
 
-public class Player : MonoBehaviour
+public class Player : ISingletonMonoBehaviour<Player>
 {
+    [Header("Parameters")]
+    [SerializeField]
+    private int _lives = 3;
+    [SerializeField]
+    private int _scorePoint;
     [SerializeField]
     private float _speed = 9.0f;
     [SerializeField]
-    private float _fireRate = 1.0f;
+    private float _fireRate = 0.2f;
     private float _canShoot = 0;
+    [SerializeField]
+    private bool _triplePower = false;
+
+    [Header("Movement Range")]
     [SerializeField]
     private float _limitedTop = 5.0f;
     [SerializeField]
@@ -20,12 +29,8 @@ public class Player : MonoBehaviour
     private float _limitedRight = 12.0f;
     [SerializeField]
     private float _limitedLeft = -12.0f;
-    [SerializeField]
-    private int _lives = 3;
-    [SerializeField]
-    private bool _triplePower = false;
-    [SerializeField]
-    private GameObject _tripleShot;
+
+    [Header("GameObject/Components")]
     [SerializeField]
     private GameObject _thurster;
     [SerializeField]
@@ -33,26 +38,20 @@ public class Player : MonoBehaviour
     [SerializeField]
     private bool _isHasShield;
     [SerializeField]
-    private int _scorePoint;
-    [SerializeField]
     private UIManager _uiManager;
     [SerializeField]
     private Animator _playerAnimator;
-    [SerializeField]
-    private AudioSource _playerAudio;
     void Start()
     {
         _uiManager = GameObject.Find("Canvas").GetComponent<UIManager>();
         _playerAnimator = gameObject.GetComponent<Animator>();
-        _playerAudio = gameObject.AddComponent<AudioSource>();
         _thurster = transform.Find("Thruster").gameObject;
+        _shield = transform.Find("Shield").gameObject;
         _isHasShield = false;
         _shield.SetActive(false);
-        _scorePoint = 0;
         _thurster.SetActive(true);
         transform.position = new(0, -3, 0);
-        if (_playerAudio == null) Debug.LogError("playerAudio is NULL\n");
-
+        _scorePoint = 0;
     }
 
     // Update is called once per frame
@@ -85,7 +84,7 @@ public class Player : MonoBehaviour
             Vector3 position = transform.position + new Vector3(0, 2, 0);
             if (_triplePower == true)
             {
-                SpawnManager.Instance.SpawnLaser(position, Quaternion.identity);
+                SpawnManager.Instance.SpawnLaser(position, Quaternion.identity, "Triple");
             }
             else
             {
